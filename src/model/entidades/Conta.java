@@ -1,19 +1,21 @@
 package model.entidades;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
-import model.entidades.enums.Agencia;
+import model.enums.Agencia;
 
-public class Conta {
+public abstract class Conta {
 	
 	private String nome;
 	private String cPF;
 	private Double rendaMensal;
 	private Long conta;
 	private Agencia agencia;
-	private Double saldo = 0D;
+	protected Double saldo = 0D;
 	
-	private ArrayList<Double> extrato = new ArrayList<>();
+	protected Map<LocalDateTime, Double> extrato = new HashMap<>();
 	
 	private static int ID = 1;
 	
@@ -79,40 +81,28 @@ public class Conta {
         return (long) ID++;
     }
 	
-	public ArrayList<Double> getExtrato() {
+	public Map<LocalDateTime, Double> getExtrato() {
 		return extrato;
 	}
 	
-	public void saque(Double saque) {
-		if(getSaldo().compareTo(saque) <= 0) {
-			System.out.println("Sua conta não tem saldo para essa transação");
-		}
-		else {
-			saldo = saldo - saque;
-			extrato.add(-saque);
-		}
-	}
+	public abstract void saque(Double saque);
 	
 	public void deposito(Double deposito) {
-		saldo = saldo + deposito;
-		extrato.add(deposito);
+		saldo += deposito;
+		extrato.put(LocalDateTime.now(), deposito);
 	}
 
-	public void transferencia(Conta contaTransferir, Conta contaTransferida, Double valor) {
-		if(contaTransferir.getSaldo().compareTo(valor) <= 0) {
-			System.out.println("Sua conta não tem saldo para essa transação");
+	public void transferencia(Conta contaTransferida, Double valor) {
+		if(contaTransferida.conta == this.conta) {
+			throw new IllegalArgumentException("Não é possivel transferir para si mesmo!");
 		}
-		else {
-			//saldo = saldo - saque;
-			//extrato.add(-saque);
-		}
+			saque(valor);
+			contaTransferida.deposito(valor);
 	}
 	
-	public void alterarDadosCadastrais(Conta contaAlterar, String nomeNovo, Double rendaMensalNova, Agencia agenciaNova) {
-		contaAlterar.setNome(nomeNovo);
-		contaAlterar.setRendaMensal(rendaMensalNova);
-		contaAlterar.setAgencia(agenciaNova);
+	public void alterarDadosCadastrais(String nomeNovo, Double rendaMensalNova, Agencia agenciaNova) {
+		setNome(nomeNovo);
+		setRendaMensal(rendaMensalNova);
+		setAgencia(agenciaNova);
 	}
-	
 }
-
