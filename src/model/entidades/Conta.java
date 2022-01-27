@@ -1,29 +1,28 @@
 package model.entidades;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.enums.Agencia;
 
 public abstract class Conta {
 	
 	private String nome;
-	private String cPF;
+	private String CPF;
 	private Double rendaMensal;
 	private Long conta;
 	private Agencia agencia;
 	protected Double saldo = 0D;
 	
-	protected Map<LocalDateTime, Double> extrato = new HashMap<>();
+	protected List<Double> extrato = new ArrayList<>();
 	
 	private static int ID = 1;
 	
 	
-	public Conta(String nome, String cPF, Double rendaMensal, Agencia agencia) {
+	public Conta(String nome, String CPF, Double rendaMensal, Agencia agencia) {
 		this.conta = getProximaContaID();
 		this.nome = nome;
-		this.cPF = cPF;
+		this.CPF = CPF;
 		this.rendaMensal = rendaMensal;
 		this.agencia = agencia;
 	}
@@ -39,13 +38,13 @@ public abstract class Conta {
 	}
 
 
-	public String getcPF() {
-		return cPF;
+	public String getCPF() {
+		return CPF;
 	}
 
 
-	public void setcPF(String cPF) {
-		this.cPF = cPF;
+	public void setcPF(String CPF) {
+		this.CPF = CPF;
 	}
 
 
@@ -81,7 +80,7 @@ public abstract class Conta {
         return (long) ID++;
     }
 	
-	public Map<LocalDateTime, Double> getExtrato() {
+	public List<Double> getExtrato() {
 		return extrato;
 	}
 	
@@ -89,7 +88,7 @@ public abstract class Conta {
 	
 	public void deposito(Double deposito) {
 		saldo += deposito;
-		extrato.put(LocalDateTime.now(), deposito);
+		extrato.add(deposito);
 	}
 
 	public void transferencia(Conta contaTransferida, Double valor) {

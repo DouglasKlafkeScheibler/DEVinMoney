@@ -1,7 +1,5 @@
 package model.entidades;
 
-import java.time.LocalDateTime;
-
 import model.enums.Agencia;
 import model.excecoes.SaldoInsuficienteException;
 
@@ -18,20 +16,18 @@ public class ContaPoupanca extends Conta{
 		}
  		else {
  			saldo = saldo - saque;
- 			extrato.put(LocalDateTime.now(), saque);
+ 			extrato.add(saque);
  		}
 	}
 	
-	public Double calculoRentabilidade(int mes, int porcentagemRentabilidade) {
-		Double saldoRendimento = 0D;
-		Double saldoTemporario = saldo;
+	public Double calculoRentabilidade(int mes, Double rendimentoAnual) {
+		Double rendimentoMensal = (rendimentoAnual/12)/100;
+		System.out.println(rendimentoMensal);
+		Double rendimentoSaldo = saldo;
 		
 		for (int i = 0; i < mes; i++) {
-			Double rendimento = saldoTemporario/100 ;
-			saldoRendimento += rendimento;
+			rendimentoSaldo += rendimentoSaldo * rendimentoMensal;
 		}
-			
-		return saldoRendimento;
-		
+		return rendimentoSaldo;
 	}
 }
