@@ -1,7 +1,6 @@
 package model.entidades;
 
 import model.enums.Agencia;
-import model.excecoes.SaldoInsuficienteException;
 
 public class ContaPoupanca extends Conta{
 
@@ -12,7 +11,8 @@ public class ContaPoupanca extends Conta{
 	@Override
 	public void saque(Double saque) {
 		if(getSaldo().compareTo(saque) < 0) {
-			throw new SaldoInsuficienteException("Sua conta não tem saldo para essa transação");
+			//Era pra ser uma excecao
+			System.out.println("Sua conta não tem saldo para essa transação");
 		}
  		else {
  			saldo = saldo - saque;
@@ -22,7 +22,6 @@ public class ContaPoupanca extends Conta{
 	
 	public Double calculoRentabilidade(int mes, Double rendimentoAnual) {
 		Double rendimentoMensal = (rendimentoAnual/12)/100;
-		System.out.println(rendimentoMensal);
 		Double rendimentoSaldo = saldo;
 		
 		for (int i = 0; i < mes; i++) {

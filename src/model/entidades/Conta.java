@@ -76,7 +76,7 @@ public abstract class Conta {
 		return saldo;
 	}
 	
-	public static Long getProximaContaID() {
+	private static Long getProximaContaID() {
         return (long) ID++;
     }
 	

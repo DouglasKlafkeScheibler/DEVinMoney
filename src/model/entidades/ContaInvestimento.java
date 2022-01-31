@@ -4,7 +4,6 @@ import java.util.Random;
 
 import model.enums.Agencia;
 import model.enums.Investimento;
-import model.excecoes.SaldoInsuficienteException;
 
 public class ContaInvestimento extends Conta{
 	
@@ -27,7 +26,8 @@ public class ContaInvestimento extends Conta{
 	@Override
 	public void saque(Double saque) {
 		if(getSaldo().compareTo(saque) < 0) {
-			throw new SaldoInsuficienteException("Sua conta não tem saldo para essa transação");
+			//Era pra ser uma excecao
+			System.out.println("Sua conta não tem saldo para essa transação");
 		}
  		else {
  			saldo = saldo - saque;
@@ -44,7 +44,7 @@ public class ContaInvestimento extends Conta{
 		for (int i = 0; i < 12; i++) {
 			rendimentoSaldo += rendimentoSaldo*rendimento;
 		}
-		System.out.println("A simulação do seu rendimento de um ano para Renda fixa é: " + rendimentoSaldo);		
+		System.out.println("A simulação do rendimento anual da sua conta em Renda fixa é: " + rendimentoSaldo);		
 	}
 	
 	//VALOR INCREMENTA POREM VARIAVEL
@@ -60,7 +60,7 @@ public class ContaInvestimento extends Conta{
 			Double rendimento = r.nextDouble(numeroMaximo-numeroMinimo) + numeroMinimo;
 			rendimentoSaldo += rendimentoSaldo*(rendimento/100);
 		}
-		System.out.println("A simulação do seu rendimento de um ano para Fundo imobiliario é: " + rendimentoSaldo);
+		System.out.println("A simulação do rendimento anual da sua conta em Fundos imobiliarios é: " + rendimentoSaldo);
 	}
 	
 	//VALOR PODE INCREMENTAR OU DECREMENTAR
@@ -76,7 +76,7 @@ public class ContaInvestimento extends Conta{
 			Double rendimento = r.nextDouble(numeroMaximo-numeroMinimo) + numeroMinimo;
 			rendimentoSaldo += rendimentoSaldo*(rendimento/100);
 		}
-		System.out.println("A simulação do seu rendimento de um ano para Renda variavel  é: " + rendimentoSaldo);
+		System.out.println("A simulação do rendimento anual da sua conta em Renda variavel é: " + rendimentoSaldo);
 	}
 }
 	
